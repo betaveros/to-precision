@@ -1,11 +1,11 @@
-def to_precision(x, p, minUnshownExponent = -2, maxUnshownExponent = None):
+def to_precision(x, p, lowE = -3, highE = None):
     """
     returns a string representation of x formatted with a precision of p
 
     Based on the webkit javascript implementation taken from here:
     https://code.google.com/p/webkit-mirror/source/browse/JavaScriptCore/kjs/number_object.cpp
     """
-    if maxUnshownExponent is None: maxUnshownExponent = p - 1
+    if highE is None: highE = p
 
     import math
     x = float(x)
@@ -38,7 +38,7 @@ def to_precision(x, p, minUnshownExponent = -2, maxUnshownExponent = None):
 
     m = "%.*g" % (p, n)
 
-    if e < minUnshownExponent or e > maxUnshownExponent:
+    if e <= lowE or e >= highE:
         out.append(m[0])
         if p > 1:
             out.append(".")
